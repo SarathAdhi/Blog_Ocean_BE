@@ -8,7 +8,8 @@ import path from "path";
 
 dotenv.config();
 
-const app: Express = express();
+export const app: Express = express();
+
 app.use(cors());
 app.use(express.json());
 
@@ -29,5 +30,3 @@ const port = process.env.PORT || 3001;
 app.listen(port, () => {
   console.log(`⚡️[server]: Server is running at http://localhost:${port}`);
 });
-
-module.exports = app;
