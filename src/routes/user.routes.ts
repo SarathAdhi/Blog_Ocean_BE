@@ -95,17 +95,24 @@ router.put("/follow/:id", async (req: Request, res: Response) => {
   const userInfo = user as User;
 
   if (userInfo?._id) {
-    const filter = { followers: userInfo._id };
-    const isUserFollowing = await _userFilter(filter);
+    // const filter = { followers: userInfo._id };
+    // const isUserFollowing = await _userFilter(filter);
+
+    const isUserFollowing = userInfo.following.some(
+      (followingId) => String(followingId._id) === id
+    );
+
+    console.log(isUserFollowing);
 
     // For following the user
-    if (isUserFollowing.length === 0) {
+    if (!isUserFollowing) {
       const updateFollowers = { $push: { followers: userInfo._id } };
       const updateFollowing = { $push: { following: id } };
 
       await _updateUserProfile(id as string, updateFollowers);
       await _updateUserProfile(userInfo._id as string, updateFollowing);
     }
+
     // For unfollowing the user
     else {
       const updateFollowers = { $pull: { followers: userInfo._id } };
