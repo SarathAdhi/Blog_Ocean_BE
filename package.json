@@ -5,7 +5,7 @@
   "author": "Sarath Adhithya",
   "license": "MIT",
   "scripts": {
-    "build": "npx tsc",
+    "build": "yarn add typescript && npx tsc",
     "start": "node index.js",
     "dev": "nodemon index.ts"
   },
