@@ -84,7 +84,7 @@ router.get("/profile", async (req: Request, res: Response) => {
   return res.status(404).json({ error: "No user found" });
 });
 
-router.post("/follow/:id", async (req: Request, res: Response) => {
+router.put("/follow/:id", async (req: Request, res: Response) => {
   const { isAuth, user } = await validateToken(req.headers.authorization!);
 
   if (!isAuth)
