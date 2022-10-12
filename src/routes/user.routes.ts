@@ -90,7 +90,7 @@ router.put("/follow/:id", async (req: Request, res: Response) => {
   if (!isAuth)
     return res.status(401).json({ error: "Please Login to continue" });
 
-  const { id } = req.query;
+  const { id } = req.params;
 
   const userInfo = user as User;
 
