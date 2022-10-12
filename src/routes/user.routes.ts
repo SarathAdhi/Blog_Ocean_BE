@@ -10,7 +10,7 @@ import {
   _userFilter,
 } from "../controllers/user.controllers";
 import { validateToken } from "../middleware/verifyToken";
-import { User } from "../types/user";
+import { User } from "../_types/user";
 
 const router = express.Router();
 

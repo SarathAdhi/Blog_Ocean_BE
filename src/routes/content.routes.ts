@@ -12,8 +12,8 @@ import {
   _updateContent,
 } from "../controllers/content.controllers";
 import { validateToken } from "../middleware/verifyToken";
-import { Content } from "../types/Content";
-import { User } from "../types/user";
+import { Comment, Content } from "../_types/content";
+import { User } from "../_types/user";
 
 const router = express.Router();
 
@@ -50,7 +50,7 @@ router.post("/create", async (req: Request, res: Response) => {
 
   try {
     const { title } = req.body;
-    const comment = await _createComment(title);
+    const comment: Comment = await _createComment(title);
 
     const content = {
       ...req.body,
@@ -127,7 +127,7 @@ router.get("/comment/:id", async (req: Request, res: Response) => {
   const userInfo = user as User;
 
   if (userInfo?._id) {
-    const comments = await _getCommentById(id as string);
+    const comments: Comment = await _getCommentById(id as string);
 
     return res.status(200).json(comments);
   }
@@ -155,7 +155,7 @@ router.post("/comment/:id", async (req: Request, res: Response) => {
     const addComment = { $push: { comments: commentObject } };
     await _updateComments({ _id: id }, addComment);
 
-    const comments = await _getCommentById(id as string);
+    const comments: Comment = await _getCommentById(id as string);
     return res.status(200).json(comments);
   }
 

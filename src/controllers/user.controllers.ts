@@ -1,6 +1,6 @@
 import jwt_decode from "jwt-decode";
 import UserModel from "../models/user.model";
-import { User } from "../types/user";
+import { User } from "../_types/user";
 
 export type JWT_Decode = {
   email: string;
