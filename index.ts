@@ -2,8 +2,8 @@ import express, { Express, Request, Response } from "express";
 import cors from "cors";
 import mongoose from "mongoose";
 import dotenv from "dotenv";
-import { userRouter } from "./routes/user.routes";
-import { contentRouter } from "./routes/content.routes";
+import { userRouter } from "./src/routes/user.routes";
+import { contentRouter } from "./src/routes/content.routes";
 
 dotenv.config();
 

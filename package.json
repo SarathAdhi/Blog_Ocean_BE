@@ -6,8 +6,8 @@
   "license": "MIT",
   "scripts": {
     "build": "npx tsc",
-    "start": "node src/index.js",
-    "dev": "nodemon src/index.ts"
+    "start": "node index.js",
+    "dev": "nodemon index.ts"
   },
   "devDependencies": {
     "@types/cors": "^2.8.12",
