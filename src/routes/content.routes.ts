@@ -4,6 +4,7 @@ import {
   _contentFilter,
   _createComment,
   _createContent,
+  _deleteContentById,
   _getCommentById,
   _getContentById,
   _getContents,
@@ -23,6 +24,7 @@ router.get("/", async (req: Request, res: Response) => {
   if (id) {
     try {
       const content = await _getContentById(id as string);
+
       return res.status(200).json(content);
     } catch (error: any) {
       const msg = error?.message as string;
@@ -38,6 +40,27 @@ router.get("/", async (req: Request, res: Response) => {
 
   const contents = await _getContents();
   return res.status(200).json(contents);
+});
+
+router.delete("/:id", async (req: Request, res: Response) => {
+  const { id } = req.params;
+
+  try {
+    await _deleteContentById(id as string);
+
+    return res
+      .status(200)
+      .json({ message: "Content deleted successfully", error: "" });
+  } catch (error: any) {
+    const msg = error?.message as string;
+
+    if (msg.includes("Cast to ObjectId failed for value"))
+      return res
+        .status(404)
+        .json({ error: "Content doesn't exist. Invalid url" });
+
+    return res.status(404).json({ error });
+  }
 });
 
 router.post("/create", async (req: Request, res: Response) => {

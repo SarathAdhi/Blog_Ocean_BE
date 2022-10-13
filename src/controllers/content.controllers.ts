@@ -29,6 +29,10 @@ export const _getContentById = async (_id: string) => {
   return content;
 };
 
+export const _deleteContentById = async (_id: string) => {
+  return await ContentModel.findByIdAndRemove({ _id });
+};
+
 export const _getContentsByUserId = async (owner: string) => {
   // it should be find and not findOne
   return await ContentModel.find({ owner })
