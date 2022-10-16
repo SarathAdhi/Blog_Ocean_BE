@@ -5,7 +5,7 @@
   "author": "Sarath Adhithya",
   "license": "MIT",
   "scripts": {
-    "start": "vercel dev",
+    "start": "node index.ts",
     "dev": "nodemon index.ts",
     "deploy": "vercel deploy --prod"
   },
