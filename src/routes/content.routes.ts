@@ -140,22 +140,24 @@ router.get("/like/:id", async (req: Request, res: Response) => {
 });
 
 router.get("/comment/:id", async (req: Request, res: Response) => {
-  const { isAuth, user } = await validateToken(req.headers.authorization!);
-
-  if (!isAuth)
-    return res.status(401).json({ error: "Please Login to continue" });
-
   const { id } = req.params;
+  const comments: Comment = await _getCommentById(id as string);
 
-  const userInfo = user as User;
+  return res.status(200).json(comments);
 
-  if (userInfo?._id) {
-    const comments: Comment = await _getCommentById(id as string);
+  // const { isAuth, user } = await validateToken(req.headers.authorization!);
+  // if (!isAuth)
+  //   return res.status(401).json({ error: "Please Login to continue" });
 
-    return res.status(200).json(comments);
-  }
+  // const userInfo = user as User;
 
-  return res.status(404).json({ error: "No user found" });
+  // if (userInfo?._id) {
+  //   const comments: Comment = await _getCommentById(id as string);
+
+  //   return res.status(200).json(comments);
+  // }
+
+  // return res.status(404).json({ error: "No user found" });
 });
 
 router.post("/comment/:id", async (req: Request, res: Response) => {
