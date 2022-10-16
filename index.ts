@@ -12,7 +12,7 @@ app.use(cors());
 app.use(express.json());
 
 app.get("/", (req: Request, res: Response) => {
-  res.send("Blog ocean official API");
+  res.send({ message: "Blog ocean official API" });
 });
 
 app.use("/user", userRouter);

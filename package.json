@@ -10,7 +10,8 @@
   "scripts": {
     "build": "yarn add typescript && npx tsc",
     "start": "node index.js",
-    "dev": "nodemon index.ts"
+    "dev": "nodemon index.ts",
+    "deploy": "vercel deploy --prod"
   },
   "devDependencies": {
     "@types/cors": "^2.8.12",
