@@ -5,7 +5,11 @@
   "author": "Sarath Adhithya",
   "license": "MIT",
   "scripts": {
-    "start": "nodemon index.ts",
+    "start": "node build/index.js",
+    "build": "tsc",
+    "postinstall": "npm run build",
+    "build1": "yarn add typescript && npx tsc",
+    "start1": "nodemon index.ts",
     "dev": "nodemon index.ts"
   },
   "devDependencies": {
