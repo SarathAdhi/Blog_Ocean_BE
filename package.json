@@ -4,9 +4,12 @@
   "main": "index.ts",
   "author": "Sarath Adhithya",
   "license": "MIT",
+  "engines": {
+    "node": "14.x"
+  },
   "scripts": {
-    "start": "NODE_ENV=development ./node_modules/.bin/netlify-lambda serve src",
-    "build": "NODE_ENV=production ./node_modules/.bin/netlify-lambda build src",
+    "build": "yarn add typescript && npx tsc",
+    "start": "node index.js",
     "dev": "nodemon index.ts"
   },
   "devDependencies": {
@@ -22,8 +25,6 @@
     "dotenv": "^16.0.3",
     "express": "^4.18.2",
     "jwt-decode": "^3.1.2",
-    "mongoose": "^6.6.5",
-    "netlify-lambda": "^2.0.15",
-    "serverless-http": "^3.0.3"
+    "mongoose": "^6.6.5"
   }
 }
