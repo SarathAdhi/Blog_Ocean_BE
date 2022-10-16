@@ -1,15 +1,13 @@
 {
   "name": "blog-ocean-backend",
   "version": "1.0.0",
-  "main": "index.ts",
+  "main": "index.js",
   "author": "Sarath Adhithya",
   "license": "MIT",
   "scripts": {
-    "start": "node index.js",
     "build": "tsc",
-    "postinstall": "npm run build",
-    "build1": "yarn add typescript && npx tsc",
-    "start1": "nodemon index.ts",
+    "start": "node .",
+    "start:dev": "ts-node index.ts",
     "dev": "nodemon index.ts"
   },
   "devDependencies": {
