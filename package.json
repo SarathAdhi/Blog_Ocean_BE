@@ -5,8 +5,7 @@
   "author": "Sarath Adhithya",
   "license": "MIT",
   "scripts": {
-    "build": "yarn add typescript && npx tsc",
-    "start": "npx tsc && vercel dev",
+    "start": "vercel dev",
     "dev": "nodemon index.ts",
     "deploy": "vercel deploy --prod"
   },
