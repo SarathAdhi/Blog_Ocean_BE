@@ -8,8 +8,26 @@ import { contentRouter } from "./src/routes/content.routes";
 dotenv.config();
 
 const app: Express = express();
+
+const validateAPIToken = (req: Request, res: Response, next: any) => {
+  const token = req.headers["x-api-token"];
+
+  if (token === process.env.API_TOKEN) {
+    next();
+  } else {
+    res
+      .status(401)
+      .send({
+        error:
+          "Invalid API token. You are not authorized to access this resource.",
+      });
+  }
+};
+
 app.use(cors());
 app.use(express.json());
+
+app.use(validateAPIToken);
 
 app.get("/", (req: Request, res: Response) => {
   res.send({ message: "Blog ocean official API" });
