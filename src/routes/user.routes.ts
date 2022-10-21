@@ -33,16 +33,24 @@ router.put("/", async (req: Request, res: Response) => {
   const { isAuth, user } = await validateToken(req.headers.authorization!);
   const userDetails = user as User;
 
-  const { username } = req.body;
+  const { username, bio } = req.body;
   const isUsernameExist = await _getUserByUsername(username);
 
   const email = isUsernameExist?.email;
   const isUserProfile = email === userDetails.email;
 
   if (!isUsernameExist || isUserProfile) {
-    const userData: User = await _getUserByEmail(userDetails.email as string);
+    if (username.length > 20)
+      return res
+        .status(409)
+        .json({ error: "Username should be less than 20 characters" });
 
-    await _updateUserProfile(userData._id as string, req.body);
+    if (bio.length > 50)
+      return res
+        .status(409)
+        .json({ error: "Bio should be less than 50 characters" });
+
+    await _updateUserProfile(userDetails._id as string, req.body);
 
     return res
       .status(200)

@@ -42,6 +42,26 @@ router.get("/", async (req: Request, res: Response) => {
   return res.status(200).json(contents);
 });
 
+router.put("/:id", async (req: Request, res: Response) => {
+  const { id } = req.params;
+
+  const { title } = req.body;
+
+  try {
+    await _updateContent(id as string, req.body);
+
+    return res
+      .status(200)
+      .json({
+        message: "Content updated successfully",
+        error: "",
+        data: { title },
+      });
+  } catch (error: any) {
+    return res.status(404).json({ error });
+  }
+});
+
 router.delete("/:id", async (req: Request, res: Response) => {
   const { id } = req.params;
 
