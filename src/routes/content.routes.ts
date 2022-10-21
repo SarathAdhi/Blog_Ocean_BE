@@ -50,13 +50,11 @@ router.put("/:id", async (req: Request, res: Response) => {
   try {
     await _updateContent(id as string, req.body);
 
-    return res
-      .status(200)
-      .json({
-        message: "Content updated successfully",
-        error: "",
-        data: { title },
-      });
+    return res.status(200).json({
+      message: "Content updated successfully",
+      error: "",
+      data: { title },
+    });
   } catch (error: any) {
     return res.status(404).json({ error });
   }
@@ -129,18 +127,16 @@ router.get("/like/:id", async (req: Request, res: Response) => {
     return res.status(401).json({ error: "Please Login to continue" });
 
   const { id } = req.params;
-  console.log(id);
 
   const userInfo = user as User;
 
   if (userInfo?._id) {
-    const filter = { likes: userInfo._id };
+    const filter = { _id: id, likes: userInfo._id };
     const isUserLikedTheContent = await _contentFilter(filter);
 
     // For liking the content
     if (isUserLikedTheContent.length === 0) {
       const updateLikes = { $push: { likes: userInfo._id } };
-      console.log(updateLikes);
 
       await _updateContent(id as string, updateLikes);
     }
