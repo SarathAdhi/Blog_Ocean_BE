@@ -50,11 +50,15 @@ export const _updateContent = async (_id: string, update: any) => {
 };
 
 export const _getCommentById = async (_id: string) => {
-  return await CommentModel.findOne({ _id })
+  let comments = await CommentModel.findOne({ _id })
     .sort({
       "comments.createdAt": -1,
     })
     .populate("comments.owner");
+
+  comments = comments.populate("comments.reactions.user");
+
+  return comments;
 };
 
 export const _updateComments = async (filter: any, update: any) => {
