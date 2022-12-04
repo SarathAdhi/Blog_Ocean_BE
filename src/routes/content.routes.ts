@@ -19,20 +19,35 @@ import { User } from "../_types/user";
 const router = express.Router();
 
 router.get("/", async (req: Request, res: Response) => {
-  const { id } = req.query;
+  const { id, isPrivate: _isPrivate } = req.query;
+
+  const isPrivate = Boolean(_isPrivate);
+
+  const { user, isAuth } = await validateToken(req.headers.authorization!);
+  const userDetails = user as User;
 
   if (id) {
     try {
       const content = await _getContentById(id as string);
+
+      if (isPrivate && !isAuth) {
+        return res.status(401).json({
+          error: "Authentication required",
+        });
+      }
+
+      if (isPrivate && content.owner._id !== userDetails?._id) {
+        return res.status(401).json({
+          error: "You don't have permission to edit this content",
+        });
+      }
 
       return res.status(200).json(content);
     } catch (error: any) {
       const msg = error?.message as string;
 
       if (msg.includes("Cast to ObjectId failed for value"))
-        return res
-          .status(404)
-          .json({ error: "Content doesn't exist. Invalid url" });
+        return res.status(404).json({ error: "Content doesn't exist." });
 
       return res.status(404).json({ error });
     }
@@ -43,6 +58,11 @@ router.get("/", async (req: Request, res: Response) => {
 });
 
 router.put("/:id", async (req: Request, res: Response) => {
+  const { isAuth, user } = await validateToken(req.headers.authorization!);
+
+  if (!isAuth)
+    return res.status(401).json({ error: "Authentication required" });
+
   const { id } = req.params;
 
   const { title } = req.body;
@@ -73,9 +93,7 @@ router.delete("/:id", async (req: Request, res: Response) => {
     const msg = error?.message as string;
 
     if (msg.includes("Cast to ObjectId failed for value"))
-      return res
-        .status(404)
-        .json({ error: "Content doesn't exist. Invalid url" });
+      return res.status(404).json({ error: "Content doesn't exist." });
 
     return res.status(404).json({ error });
   }
