@@ -36,7 +36,9 @@ router.get("/", async (req: Request, res: Response) => {
         });
       }
 
-      if (isPrivate && content.owner._id !== userDetails?._id) {
+      console.log(content.owner._id, userDetails?._id);
+
+      if (isPrivate && String(content.owner._id) !== String(userDetails?._id)) {
         return res.status(401).json({
           error: "You don't have permission to edit this content",
         });
